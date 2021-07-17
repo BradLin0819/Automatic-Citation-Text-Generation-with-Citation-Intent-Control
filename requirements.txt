@@ -1,0 +1,19 @@
+transformers==4.2.2
+sacrebleu
+scikit-learn
+tensorboard
+git-python==1.0.3
+beautifulsoup4
+tqdm
+nltk
+pandas
+datasets
+pytest
+rouge-score
+allennlp
+python-levenshtein
+jsonlines
+scispacy
+en-core-sci-lg @ https://s3-us-west-2.amazonaws.com/ai2-s2-scispacy/releases/v0.4.0/en_core_sci_lg-0.4.0.tar.gz
+six
+bert-score

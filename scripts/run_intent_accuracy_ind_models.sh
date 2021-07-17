@@ -1,0 +1,27 @@
+#!/bin/bash
+
+GENERATED_CITATION_TEXTS_PATH=$1
+SCICITE_INTENT_BASE_PATH=scicite
+
+if [ ! -d ${SCICITE_INTENT_BASE_PATH} ]; then
+    git clone https://github.com/allenai/scicite.git
+fi
+
+SCICITE_INTENT_MODEL_INPUT_FILENAME=$2
+SCICITE_INTENT_MODEL_PRED_FILENAME=$3
+SCICITE_INTENT_MODEL_INPUT_PATH=${SCICITE_INTENT_BASE_PATH}/${SCICITE_INTENT_MODEL_INPUT_FILENAME}
+SCICITE_INTENT_MODEL_PRED_PATH=${SCICITE_INTENT_BASE_PATH}/${SCICITE_INTENT_MODEL_PRED_FILENAME}
+
+
+python utils/create_scicite_intent_test_samples_ind_models.py ${GENERATED_CITATION_TEXTS_PATH} ${SCICITE_INTENT_MODEL_INPUT_PATH}
+
+cd ${SCICITE_INTENT_BASE_PATH}
+
+allennlp predict scicite.tar.gz ${SCICITE_INTENT_MODEL_INPUT_FILENAME} \
+--predictor predictor_scicite \
+--include-package scicite \
+--output-file ${SCICITE_INTENT_MODEL_PRED_FILENAME}
+
+cd ..
+
+python utils/cal_intent_accuracy.py ${SCICITE_INTENT_MODEL_INPUT_PATH} ${SCICITE_INTENT_MODEL_PRED_PATH} | tee accuracy_ind_models.log
