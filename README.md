@@ -11,6 +11,12 @@ Given an abstract of a citing paper, an abstract of a reference paper, and the c
 
 To generate citation texts with different citation intents for the same reference paper, we propose a **Controllable Citation Text Generation Model (CCTGM)**, extending the existing pretrained text generation model by **taking the citation intent as control code**. The flowchart of our model is illustrated as follows:
 ![](https://i.imgur.com/qTiaxRi.png)
+## Environment
+
+
+| OS | GPU | RAM |
+| -------- | -------- | -------- |
+| Ubuntu 20.04     | RTX 3090 24GB     | 64 GB     |
 
 ## Installation
 Clone this repository
@@ -36,7 +42,7 @@ Set up the environment
 ```
 If your CUDA version is greater than `11.0`, please re-install PyTorch.
 ```
-pip install torch==1.8.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
+pip install torch==1.9.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 ## Data
 Our dataset is extended from [SciCite](https://github.com/allenai/scicite) citation intent classification dataset. We crawled the metadata of papers in SciCite using [Semantic Scholar API](https://api.semanticscholar.org/). The code can be found in `utils/fetch_papers_metadata.py`
@@ -68,7 +74,7 @@ We use two Transformer-based pretrained text generation models, `BART` and `T5` 
 
 Moreover, considering the abstract of the citing paper could not be available while writing citation texts, so we propose ```CCTGM-title```, which uses the title of the citing paper instead of the abstract.
 
-To train BART-based `CCTGM-abs`, which uses the abstract as the input of the citing paper, please run the following command.
+To train BART-based `CCTGM-abs`, which uses the abstract as the input of the citing paper, please run the following command:
 ```
 ./scripts/train_bart_base_CCTGM_abs.sh
 ```
@@ -85,7 +91,10 @@ and T5-based ```CCTGM-title```
 ```
 ./scripts/train_t5_base_CCTGM_title.sh
 ```
-You can download pretrained model checkpoints from [here (12.0 GB)](https://drive.google.com/drive/folders/1wtl3_Z3oOWlnjI1iTr1ddjPaFkVjOpMO?usp=sharing).
+
+Please decrease `per_device_train_batch_size` in the training scripts when CUDA out-of-memory error is triggered.
+
+You can also download pretrained model checkpoints from [here (12.0 GB)](https://drive.google.com/drive/folders/1wtl3_Z3oOWlnjI1iTr1ddjPaFkVjOpMO?usp=sharing).
 ## Evaluation
 ### Relevance Evaluation
 To evaluate the relevance of generated citation texts of our models, we use [ROUGE](https://github.com/pltrdy/files2rouge) and [SciBERTScore](https://github.com/Tiiiger/bert_score) as metrics. 
@@ -109,21 +118,43 @@ The results will be generated in `experiments/<bart-base or t5-base>/CCTGM_title
 ### Citation Intent Correctness Evaluation
 To evaluate the correctness of citation intent, we use the pretrained citation intent classifier provided by [SciCite](https://github.com/allenai/scicite) to automatically label the generated citation texts check if these citation intents satisfy the given citation intent.
 
-Please run
+Before running this evaluation, please create a new virtual environment and activate it.
+
+Deactivate `cctgm` virtual environment first.
 ```
-./scripts/run_intent_accuracy.sh <path of generated citation texts file>
+conda deactivate
+```
+Create a new environment for  Citation Intent Correctness Evaluation
+```
+conda create --name scicite python=3.6
+```
+Activate the environment
+```
+conda activate scicite
+```
+Install dependencies
+```
+pip install -r scicite/requirements.in -c scicite/constraints.txt
+```
+
+Then, please run the following command:
+```
+./scripts/run_intent_accuracy.sh \
+    <path of generated citation texts file> \
+    test.jsonl \
+    pred.jsonl
 ```
 - `generated citation texts file` will generate in directories `experiments/<bart-base or t5-base>/<CCTGM-abs or CCTGM-title>` after running `run_eval_test_CCTGM_*.sh` scripts . The file name will be `<CCTGM-abs/CCTGM-title>.test.result`.
 - After running the `run_intent_accuracy.sh` script, `accuracy.log` will show the citation intent correctness of the corresponding model.
 
 ## Inference
-Please run 
+Please use `cctgm` virtual environment and run the following command:
 ```
 python transformers_src/inference.py \
     --model_name <facebook/bart-base or t5-base> \
     --pretrained_model_path <pretrained_model_path> \
     --citing_context <citing_context> \
-    --cited_context <cited_context> 
+    --cited_context <cited_context> \
     --intent <user_specified_intent>
 ```
 Where
