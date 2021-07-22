@@ -3,10 +3,12 @@
 INTENT=$1
 MODEL_NAME=$2
 MODEL_PATH_NAME=$(echo ${MODEL_NAME} | cut -d '/' -f2)
-EXPERIMENT_DIRNAME=ind
+EXPERIMENT_DIRNAME=ind_abs
 EXPERIMENT_PATH=experiments/${MODEL_PATH_NAME}/${EXPERIMENT_DIRNAME}
 CANDIDATE_PATH=${EXPERIMENT_PATH}/${INTENT}.test.result
-DATA_PATH=scicite_data_${INTENT}_preprocessed_3
+BASE_DATA_DIR=data/preprocessed
+DATA_PATH=${BASE_DATA_DIR}/data_${INTENT}_abs
+
 REFERENCE_PATH=${DATA_PATH}/test.target
 
 if [ ! -d ${EXPERIMENT_PATH} ]; then
@@ -14,7 +16,7 @@ if [ ! -d ${EXPERIMENT_PATH} ]; then
 fi
 
 python transformers_src/run_eval.py ${MODEL_NAME} ${DATA_PATH}/test.source ${EXPERIMENT_PATH}/${INTENT}.test.result \
-    --pretrained_model_path models/output_dir_$(echo ${MODEL_PATH_NAME} | tr '-' '_')_${INTENT}/pytorch_model.bin  \
+    --pretrained_model_path models/output_dir_$(echo ${MODEL_PATH_NAME} | tr '-' '_')_${INTENT}_abs/pytorch_model.bin  \
     --reference_path ${REFERENCE_PATH} \
     --fp16 \
     --score_path ${EXPERIMENT_PATH}/${INTENT}_test_metric.json \
