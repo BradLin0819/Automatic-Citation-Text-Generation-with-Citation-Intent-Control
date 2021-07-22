@@ -197,6 +197,4 @@ def run_generate(verbose=True):
 
 
 if __name__ == "__main__":
-    # Usage for MT:
-    # python run_eval.py MODEL_NAME $DATA_DIR/test.source $save_dir/test_translations.txt --reference_path $DATA_DIR/test.target --score_path $save_dir/test_bleu.json  --task translation $@
     run_generate(verbose=True)

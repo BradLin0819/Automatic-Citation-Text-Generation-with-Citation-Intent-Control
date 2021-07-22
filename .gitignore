@@ -1,6 +1,5 @@
 */__pycache__
 .vscode
-experiments/
 
 # other dependencies
 files2rouge
