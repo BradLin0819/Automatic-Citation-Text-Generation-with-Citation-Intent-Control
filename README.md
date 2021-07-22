@@ -153,8 +153,8 @@ Please use `cctgm` virtual environment and run the following command:
 python transformers_src/inference.py \
     --model_name <facebook/bart-base or t5-base> \
     --pretrained_model_path <pretrained_model_path> \
-    --citing_context <citing_context> \
-    --cited_context <cited_context> \
+    --citing_context '<citing_context>' \
+    --cited_context '<cited_context>' \
     --intent <user_specified_intent>
 ```
 Where
