@@ -57,7 +57,7 @@ python utils/scicite_data_preprocess.py \
     --out_dir <Path of output directory> \
     --dataset_type <train/val/test> \
     --intent <background/method/result> \
-    --citing_input_mode <abstract/title>
+    --citing_input_mode <abstract/title> \
     --prepend_token (Optional) \
     --outfile_type <file format of the exported file>
 ```
