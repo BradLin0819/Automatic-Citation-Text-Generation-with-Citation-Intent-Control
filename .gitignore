@@ -1,5 +1,8 @@
 */__pycache__
 .vscode
+models/
+experiments/
+*.log
 
 # other dependencies
 files2rouge

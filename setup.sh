@@ -23,3 +23,4 @@ fi
 # Download pretrained classifier
 wget https://s3-us-west-2.amazonaws.com/ai2-s2-research/scicite/models/scicite.tar.gz -P scicite
 
+mkdir models
