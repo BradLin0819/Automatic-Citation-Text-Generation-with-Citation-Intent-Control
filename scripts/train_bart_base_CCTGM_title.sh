@@ -1,6 +1,6 @@
 BASE_DIR="data/preprocessed"
 DATA_DIR="${BASE_DIR}/data_CCTGM_title"
-OUTPUT_DIR="${BASE_DIR}/models/output_dir_bart_base_CCTGM_title"
+OUTPUT_DIR="$models/output_dir_bart_base_CCTGM_title"
 TRANSFORMERS_PATH="transformers_src"
 MAX_STEPS=40000
 WARMUP_STEPS=$(bc <<< "${MAX_STEPS} * 0.1 / 1")

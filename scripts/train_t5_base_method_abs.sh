@@ -1,6 +1,6 @@
 BASE_DIR="data/preprocessed"
-DATA_DIR="${BASE_DIR}/data_background_abs"
-OUTPUT_DIR="${BASE_DIR}/models/output_dir_t5_base_background"
+DATA_DIR="${BASE_DIR}/data_method_abs"
+OUTPUT_DIR="models/output_dir_t5_base_method_abs"
 TRANSFORMERS_PATH="transformers_src"
 MAX_STEPS=40000
 WARMUP_STEPS=$(bc <<< "${MAX_STEPS} * 0.1 / 1")
@@ -26,7 +26,7 @@ python ${TRANSFORMERS_PATH}/finetune_trainer.py \
     --load_best_model_at_end \
     --metric_for_best_model loss \
     --evaluation_strategy epoch \
-    --logging_dir runs/t5_base_background \
+    --logging_dir runs/t5_base_method_abs \
     --seed 42 \
     --early_stopping_patience 3 \
     --fp16
