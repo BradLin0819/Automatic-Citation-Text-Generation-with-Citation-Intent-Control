@@ -119,14 +119,19 @@ Please run
 ## Inference
 Please run 
 ```
-./run_inference.sh <pretrained_model_type> <pretrained_model_path> <citing_context> <cited_context> <user_specified_intent>
+python transformers_src/inference.py \
+    --model_name <facebook/bart-base or t5-base> \
+    --pretrained_model_path <pretrained_model_path> \
+    --citing_context <citing_context> \
+    --cited_context <cited_context> 
+    --intent <user_specified_intent>
 ```
 Where
-- `pretrained_model_type`: Type of the pretrained model. `facebook/bart-base` or `t5-base`.
+- `model_name`: Type of the pretrained model. `facebook/bart-base` or `t5-base`.
 - `pretrained_model_path`: Path of the pretrained model checkpoint.
 - `citing_context`: The provided content of the citing paper.
 - `cited_context`: The provided content of the reference paper.
-- `user_specified_intent`: The citation intent specified by the user. (background/method/result)
+- `intent`: The citation intent specified by the user. (background/method/result)
 
 ## Contact
 If you have any questions about this project, please contact us or create an [issue](https://github.com/BradLin0819/Automatic-Citation-Text-Generation-with-Citation-Intent-Control/issues).
