@@ -101,6 +101,7 @@ To evaluate the relevance of generated citation texts of our models, we use [ROU
 
 
 To run the evaluation scripts, please download the pretrained model checkpoints first, unzip the compressed file, and move these models to `models/`.
+
 ```
 mv pretrained-models/* models/
 ```
@@ -135,6 +136,10 @@ conda activate scicite
 Install dependencies
 ```
 pip install -r scicite/requirements.in -c scicite/constraints.txt
+```
+Downgrade `overrides` package
+```
+pip install overrides==3.1.0
 ```
 
 Then, please run the following command:
