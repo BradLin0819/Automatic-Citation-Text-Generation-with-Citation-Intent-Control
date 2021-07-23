@@ -117,7 +117,7 @@ The results will be generated in `experiments/<bart-base or t5-base>/CCTGM_abs`.
 The results will be generated in `experiments/<bart-base or t5-base>/CCTGM_title`.
 
 ### Citation Intent Correctness Evaluation
-To evaluate the correctness of citation intent, we use the pretrained citation intent classifier provided by [SciCite](https://github.com/allenai/scicite) to automatically label the generated citation texts check if these citation intents satisfy the given citation intent.
+To evaluate the correctness of citation intent, we use the pretrained citation intent classifier provided by [SciCite](https://github.com/allenai/scicite) to automatically label the generated citation texts and check if these citation intents satisfy the given citation intent.
 
 Before running this evaluation, please create a new virtual environment and activate it.
 
